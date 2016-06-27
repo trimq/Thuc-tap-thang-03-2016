@@ -8,16 +8,16 @@
 ###[2.Glance Components](#2)
 
 ###[3.Glance Architecture](#3)
-- [3.1.Các khái niệm AuthN/AuthZ] (3.1#)
-- [3.2.Khái niệm SSO] (#3.2)
+- [3.1.Các khái niệm AuthN/AuthZ](3.1#)
+- [3.2.Khái niệm SSO](#3.2)
 
 ###[4. Glance Formats](#4)
 
 ###[5. Luồng trạng thái của Glance] (#5)
 
 ###[6. File cấu hình của image] (#6)
--[6.1. Thư lục lưu trữ image] (#luutruimage)
--[6.2. Thư mực lưu file cấu hình image] (#cauhinhimage)
+- [6.1. Thư lục lưu trữ image](#luutruimage)
+- [6.2. Thư mực lưu file cấu hình image](#cauhinhimage)
 
 
 <a name="1"></a>
