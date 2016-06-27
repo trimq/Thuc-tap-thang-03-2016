@@ -141,7 +141,7 @@ Luồng trạng thái của Glance cho biết trạng thái của image trong qu
 <li><b>deactivated</b>: Trạng thái biểu thị việc không được phép truy cập vào dữ liệu của image với tài khoản không phải admin. Khi image ở trạng thái này, ta không thể tải xuống cũng như export hay clone image.</li>
 <li><b>killed</b>: Trạng thái biểu thị rằng có vấn đề xảy ra trong quá trình tải dữ liệu của image lên và image đó không thể đọc được</li>
 <li><b>deleted</b>: Trạng thái này biểu thị việc Glance vẫn giữ thông tin về image nhưng nó không còn sẵn sàng để sử dụng nữa. Image ở trạng thái này sẽ tự động bị gỡ bỏ vào ngày hôm sau.</li>
-
+</ul>
 <a name="6"></a>
 
 ###6. File cấu hình của image:
