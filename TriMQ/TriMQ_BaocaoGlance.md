@@ -2,8 +2,8 @@
 
 ##Mục lục:
 ###[1.Tổng quan chung về Project Glance] (#1)
-	- [1.1. Khái niệm](#1.1)
-	- [1.2. Công dụng](#1.2)
+- [1.1. Khái niệm](#1.1)
+- [1.2. Công dụng](#1.2)
 	
 ###[2.Glance Components](#2)
 
@@ -59,27 +59,27 @@ Glance có một kiến trúc client-server và cung cấp các REST API để t
 <img src="http://www.sparkmycloud.com/blog/wp-content/uploads/2016/01/Untitled-drawing11.png">
 
 Glance gồm có 1 sô thành phần như:
-
-	- **Client**: Bất kì ứng dụng nào sử dụng Glance server.
-	- **REST API**: exposes Glance functionality via REST
-	- **Database Abstraction Layer (DAL)**: Là 1 giao diện ứng dụng trong đo hợp nhất các Glance và database
-	- **Glance Domain Controller**: Thực hiện các chức năng chính của Glance như: authorization, notifications, policies, database connections.
-	- **Glance Store**: Tạo ra sự tương tác giữa Glance và các data stores khác
-	- **Registry Layer**: Tùy chọn layer tạo ra thông tin liên lạc an toàn giữa Domain và DAL bằng cách sử dụng 1 dịch vụ riêng biệt.
-
+<ul>
+<li>Client: Bất kì ứng dụng nào sử dụng Glance server.</li>
+<li>REST API: exposes Glance functionality via REST</li>
+<li>Database Abstraction Layer (DAL): Là 1 giao diện ứng dụng trong đo hợp nhất các Glance và database</li>
+<li>Glance Domain Controller: Thực hiện các chức năng chính của Glance như: authorization, notifications, policies, database connections.</li>
+<li>Glance Store: Tạo ra sự tương tác giữa Glance và các data stores khác</li>
+<li>Registry Layer: Tùy chọn layer tạo ra thông tin liên lạc an toàn giữa Domain và DAL bằng cách sử dụng 1 dịch vụ riêng biệt.</li>
+</ul>
 
 <a name="3.1"></a>
 ####3.1. Khái niệm cơ bản về AuthN/AuthZ:
-**AuthN**
+-AuthN
+<ul>
+<li>Xác thực người dùng</li>
+<li>Giao tiếp với danh tính người dùng, có 1 số lượng lớn các hệ thống để kiểm soát mức độ nhận dạng và quản lý người dùng</li>
+<li>Làm giảm tải số lượng thông tin người dùng cung cấp thông qua SSO</li>
 
-	- Xác thực người dùng
-	- Giao tiếp với danh tính người dùng, có 1 số lượng lớn các hệ thống để kiểm soát mức độ nhận dạng và quản lý người dùng
-	- Làm giảm tải số lượng thông tin người dùng cung cấp thông qua SSO
-
-**AuthZ**
-
-	- Trả lời câu hỏi liên quan đến những thiết lập khác nhau, những gì người dùng hay hệ thống được phép truy cập
-	- 1 nền tảng AuthZ có thể xác định 1 người dùng là 1 developer, sau đó nó sẽ cấo phép của mình để đẩy mã nguồn lên git, những không được sửa đổi các phần mềm triển khai hoặc môi trường sản xuất
+-AuthZ
+<ul>
+<li>Trả lời câu hỏi liên quan đến những thiết lập khác nhau, những gì người dùng hay hệ thống được phép truy cập</li>
+<li>1 nền tảng AuthZ có thể xác định 1 người dùng là 1 developer, sau đó nó sẽ cấo phép của mình để đẩy mã nguồn lên git, những không được sửa đổi các phần mềm triển khai hoặc môi trường sản xuất</li>
 
 
 <a name="3.2"></a>
@@ -101,7 +101,7 @@ Glance gồm có 1 sô thành phần như:
 
 - Khi ta thêm 1 image vào Glance, cần xác định được các định dạng disk formats hay container format của image.
 - Container format được coi là phần hồn của image và disk được coi là phần xác, bởi vì khi ta gọi 1 image, hệ thống sẽ đọc container format trước để biết thông tin của image(hệ điều hành, định dạng, nơi lưu trữ), khi nó đọc xong và xác định được thông tin của image thì nó mới gọi tiếp đến disk format. Việc này làm giảm thừoi gian xử lý bởi Container format nhẹ hơn disk format rất nhiều nên có thể đọc nhanh hơn.
--**Disk format**
+-Disk format
 
 |Định dạng|Mô tả|
 |---------|-----|
@@ -113,7 +113,7 @@ Glance gồm có 1 sô thành phần như:
 |ISO|Định dạng nén của đĩa quang học|
 |AMI,ARI,AKI|Định dạng của Amazone|	
 
--*Container format*
+-Container format
 |Định dạng|Mô tả|
 |---------|-----|
 |bare|không có container hay metadata trong đĩa|
@@ -138,6 +138,65 @@ Luồng trạng thái của Glance cho biết trạng thái của image trong qu
 
 <a name="6"></a>
 ###6. File cấu hình của image:
+
+<a name=luutruimage></a>
+
+####6.1. Thư mục lưu trữ image
+
+`var/lib/glance/image`
+- Đoạn file cấu hình thư mục lưu trữ image trong `glance-api.conf`
+
+```sh
+[glance_store]
+default_store = file
+stores = file,http
+filesystem_store_datadir = /var/lib/glance/images/
+```
+
+####6.2. Thư mục chứa file cấu hình của Glance
+
+`etc/glance`
+
+-Các thư mục file cấu hình của Glance:
+<ul>
+<li><b>Glance-api.conf</b>: File cấu hình cho dịch vụ API image.</li>
+<li><b>Glance-registry.conf</b>: Tập tin cấu hình cho glance image registry, chứa các metadata về images</li>
+<li><b>Glance-scrubber.conf</b>: Tiện ích dùng để xóa sạch các image đã được xóa. Nhiều cái scrubber-glance có thể chạy trên 1 deployment</li>
+<li><b>policy.json</b>: Kiểm soát các truy cập vào image service. Tại đây chúng ta có thể xác định được vai trò, chính sách, đó là các tính năng bảo mật trong Openstack Glance</li>
+</ul>
+
+
+<a name=image></a>
+####7. Image and Instance:
+Như đã nói trước đó, các disk image được lưu trữ như là 1 template. Image service kiểm soát và quản lý các images.Instance là 1 cái máy ảo riêng biệt chạy trên node compute và node compute cũng quản lý các instances. Người dùng có thể chạy bất kì số lượng instances nào với cùng image. Mỗi lần khởi động instances được tạo bởi bản copy dựa vào image. Vậy nên bất ì thay đổi nào trên instances đều không bị ảnh hưởng đến image cơ bản. Chúng ta có thể thực hiện 1 snapshot của instances đang chạy và có thể khởi động các instances khác.
+Khi chúng ta chạy 1 instances ta cần phải xác định được flavor của nó, đó là đại điện cho tài nguyên ảo. Flavor xác định có bao nhiêu CPUs ảo mà instances có, số lượng RAM sẵn có của nó, kích cỡ của ổ đĩa. Openstack cung cấp các flavor đã được xác định trước, chúng ta có thể khởi tạo và chỉnh sửa các flavor.
+Sơ đồ dưới đây cho biết tình trạng hệ thống trước khi launching một instance. Các image store, có số lượng image được xác định trước, compute nod chứa vcpu sẵn, bộ nhớ và tài nguyên đĩa địa phương và cinder-volume chứa số lượng contains number được xác định trước.
+
+<img src="http://www.sparkmycloud.com/blog/wp-content/uploads/2016/01/Untitled-drawing2.jpg">
+
+Trước khi khởi chạy 1 instance đã được chọn image, flavor hay bất kì thuộc tính nào khác. Lựa chọn flavor cũng cấp 1 root volume, dán nhãn là VDA và lưu trữ tạm thời bổ sung được dán nhãn là VDB và cinder-volume là ánh xạ tới ảo đĩa thứ ba và gọi nó là VDC.
+
+<img src="http://www.sparkmycloud.com/blog/wp-content/uploads/2016/01/new.jpg">
+
+Trong hình này, các image base được sao chép vào local disk từ các image store. VDA là đĩa đầu tiên mà các instances truy cập, các instance bắt đầu nhanh hơn nếu kích thước của image là nhỏ hơn như ít dữ liệu cần phải được sao chép trên mạng. VDB là một đĩa trống tạm thời được tạo ra dùng với instance, nó sẽ được xóa khi dụ chấm dứt.
+Vdc kết nôi tới cinder-volume sử dụng iSCSI. Sau khi compute node quy định vCPU và tài nguyên về bộ nhớ, instance được boot từ volume vda. Instance chạy và thay đổi dữ liệu trên ổ đĩa. Nếu volume store nằm trên 1 mạng riêng biệt, tùy chọn my_block_storage_ip được xác định trong storage node tập tin file cấu hình image lưu thông qua compute node.
+Khi 1 cái instance bị xóa. Trạng thái này được phá bỏ kể cả với trường hợp ngoại lệ là volume khó bị xóa. Ephemeral storage bị xóa đi; bộ nhớ, vCPU và các tài nguyên đã được sử dụng nhưng image remain vẫn không thay đổi trong suốt quá trình này.
+
+<a name="statusflow" ></a>
+
+####8. Glance Status Flow:
+
+Glance status flow hiển thị trạng thái của image trong khi uploading.Khi chúng ta tạo 1 image, bước đầu tiên là queuing, image sẽ queue trong 1 khoảng thời gian ngắn để định danh dành cho image và sẵn sàng upload. Sau khi queuing image được chuyển tới 1 trạng thái gọi là Saving ,đó có nghĩa là image chưa được tải lên đầy đủ. Một khi 1 image được tải lên hoàn toàn thì sẽ được gọi là trạng thái active. Khi uploading fails nó sẽ chuyển tới killed hoặc trạng thái deleted.Chúng ta cần tắt và kích hoạt lại bản image được tải lên đầy đủ bằng cách sử dụng command.
+
+<img src="http://www.sparkmycloud.com/blog/wp-content/uploads/2016/01/Untitled-drawing1.jpg">
+
+<ul>
+<li><b>queued</b>:Định danh của image được lưu giữ cho 1 image trong Glance registry, không có dữ liệu image nào được tải lên Glance và kích thước image không được set 0 khi tạo.</li>
+<li><b>saving</b>:Biểu thị dữ liệu raw của images khi bắt đầu được upload lên glance . Khi 1 image được đăng ký với cuộc gọi tới POST /images và có 1 cái x-image-meta-location header được giới thiệu. Image đó sẽ không bao giờ trong trạng thái status (được xem như là image luôn trong trạng thái sẵn sàng ở 1 vài nơi)</li>
+
+
+
+
 
 
 
