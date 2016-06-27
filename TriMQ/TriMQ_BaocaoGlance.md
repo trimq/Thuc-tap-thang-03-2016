@@ -16,6 +16,8 @@
 ###[5. Luồng trạng thái của Glance] (#5)
 
 ###[6. File cấu hình của image] (#6)
+-[6.1. Thư lục lưu trữ image] (#luutruimage)
+-[6.2. Thư mực lưu file cấu hình image] (#cauhinhimage)
 
 
 <a name="1"></a>
@@ -141,8 +143,10 @@ Luồng trạng thái của Glance cho biết trạng thái của image trong qu
 <li><b>deleted</b>: Trạng thái này biểu thị việc Glance vẫn giữ thông tin về image nhưng nó không còn sẵn sàng để sử dụng nữa. Image ở trạng thái này sẽ tự động bị gỡ bỏ vào ngày hôm sau.</li>
 
 <a name="6"></a>
-###6. File cấu hình của image:
 
+###6. File cấu hình của image:
+Những thư mục chứa file cấu hình của Image service
+<a name="luutruimage"></a>
 ####6.1. Thư mục lưu trữ image
 
 `var/lib/glance/image`
@@ -154,7 +158,7 @@ default_store = file
 stores = file,http
 filesystem_store_datadir = /var/lib/glance/images/
 ```
-
+<a name="cauhinhimage"></a>
 ####6.2. Thư mục chứa file cấu hình của Glance
 
 `etc/glance`
